@@ -200,7 +200,7 @@ Place the local CA created certificate at the folder `DAPS/keys/TLS/` and name i
 
 The testbed will have two built-in Connectors which are already preconfigured and ready out-of-the-box. To tailor the TRUE Connector setup to your needs follow the next steps.
 
-For a deep dive in to the TRUE Connector see [here](https://github.com/Engineering-Research-and-Development/true-connector/releases/tag/v1.0.0)
+For a deep dive in to the TRUE Connector see [here](https://github.com/Engineering-Research-and-Development/true-connector/tree/v1.0.0)
 
 ## Generate DAPS certificate using Omejdn DAPS
 
@@ -277,11 +277,11 @@ This will load certificates from truststore and when making https call towards t
 
 Open *ssl-server.jks* file from TRUEConnector/ecc_cert folder using KeyStore Explorer and export certificate (right click on entry name):
 
-![Certificate_1](Export_TC_Certificate_1.jpg "Export TRUE Connector Certificate")
+![Certificate_1](pictures/Export_TC_Certificate_1.jpg "Export TRUE Connector Certificate")
 
 and provide location where to save exported certificate. It will be needed in next step, to update the external connector truststore.
 
-![Certificate_2](Export_TC_Certificate_2.jpg "Export TRUE Connector Certificate 2")
+![Certificate_2](pictures/Export_TC_Certificate_2.jpg "Export TRUE Connector Certificate 2")
 
 Or you can use already extracted *execution_core_container.cer* file from **ecc_cert** folder.
 
@@ -289,11 +289,11 @@ Or you can use already extracted *execution_core_container.cer* file from **ecc_
 
 Open truststore file *truststore.p12* using KeyStore Explorer and import TRUE Connector certificate, so that the external connector can make https calls towards TRUE Connector provider
 
-![Truststore](Import_TC_Certificate.jpg "Import TRUE Connector Certificate")
+![Truststore](pictures/Import_TC_Certificate.jpg "Import TRUE Connector Certificate")
 
 and provide alias *true-connector*
 
-![Truststore Alias](Import_TC_Certificate_alias.jpg "Import TRUE Connector Certificate alias")
+![Truststore Alias](pictures/Import_TC_Certificate_alias.jpg "Import TRUE Connector Certificate alias")
 
 This will be used when external connector makes https request towards ecc-provider, to check hostname with imported certificate.
 
@@ -302,13 +302,13 @@ This will be used when external connector makes https request towards ecc-provid
 
 ### TRUE Connector as consumer
 
-To perform contract negotiation with DataSpaceConnector and get an artifact. For this purpose, you can use ![TC as consumer](TC_Consumer.png "TC as consumer")
+To perform contract negotiation with another connector and get an artifact. For this purpose, you can use ![TC as consumer](TC_Consumer.png "TC as consumer")
 
 You can execute the whole folder, same as before, or execute each request in that order.
 
 If everything was successful, it should look like the following:
 
-![TC as consumer result](TC_Consumer_result.png "TC as consumer result")
+![TC as consumer result](pictures/TC_Consumer_result.png "TC as consumer result")
 
 
 ### TRUE Connector as provider
@@ -320,21 +320,23 @@ https://localhost:8090/
 
 ```
 
-Same goes as before, execute each request or the whole TC as provider folder:
+The IDS endpoint where the TRUE Connector provides it's data is:
 
-![TC as provider](TC_Provider.png "TC as provider")
+```
+https://localhost:8889/data
+```
 
 ### Broker interaction
 
 The interaction with MetadataBroker can be checked with the requests from the Broker interaction folder in the same way as the steps from above.
 
-![Broker interaction](Broker_interaction.png "Broker interaction")
+![Broker interaction](pictures/Broker_interaction.png "Broker interaction")
 
 ### Self Description API
 
 And finally, the Self Description API, for modifying the Self Description document can be accessed via the 
 
-![Self Description API](Self_Description_API.png "Self Description API")
+![Self Description API](pictures/Self_Description_API.png "Self Description API")
 
 # METADATA BROKER
 
