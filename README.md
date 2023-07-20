@@ -300,6 +300,12 @@ This will be used when external connector makes https request towards ecc-provid
 
 ## Testbed interaction
 
+For interaction with the Testbed you can use the provided [Postman collection](TRUEConnector_MVDS.postman_collection.json)
+
+The endpoints can be configured in the **Variables** section of the collection ![Variables](pictures/postman_variables.png "Postman variables")
+
+The **Forward-To** refers to the provider connector to whom the message should be sent.
+
 ### TRUE Connector as consumer
 
 To perform contract negotiation with another connector and get an artifact. For this purpose, you can use ![TC as consumer](pictures/TC_Consumer.png "TC as consumer")
