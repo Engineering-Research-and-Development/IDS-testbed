@@ -200,7 +200,7 @@ Place the local CA created certificate at the folder `DAPS/keys/TLS/` and name i
 
 The testbed will have two built-in Connectors which are already preconfigured and ready out-of-the-box. To tailor the TRUE Connector setup to your needs follow the next steps.
 
-For a deep dive in to the TRUE Connector see [here](https://github.com/Engineering-Research-and-Development/true-connector)
+For a deep dive in to the TRUE Connector see [here](https://github.com/Engineering-Research-and-Development/true-connector/releases/tag/v1.0.0)
 
 ## Generate DAPS certificate using Omejdn DAPS
 
@@ -222,7 +222,7 @@ As Export password insert ***password***, and confirm it.
 This will generate valid testbed3.p12 file. Copy this file to certificate folder of the connector.
 
 
-## TrueConnector properties
+## TRUE Connector properties
 
 Make sure that following properties are configured for Testbed environment:
 
@@ -273,34 +273,34 @@ TRUSTORE_PASSWORD=allpassword
 
 This will load certificates from truststore and when making https call towards target system, certificate will be validated against truststore, and if certificate is present and valid, call will be successful, otherwise you will get PKIX exception.
 
-### Export TrueConnector certificate
+### Export TRUE Connector certificate
 
-Open *ssl-server.jks* file from TrueConnector/ecc_cert folder using KeyStore Explorer and export certificate (right click on entry name):
+Open *ssl-server.jks* file from TRUEConnector/ecc_cert folder using KeyStore Explorer and export certificate (right click on entry name):
 
-![Certificate_1](Export_TC_Certificate_1.jpg "Export TrueConnector Certificate")
+![Certificate_1](Export_TC_Certificate_1.jpg "Export TRUE Connector Certificate")
 
 and provide location where to save exported certificate. It will be needed in next step, to update the external connector truststore.
 
-![Certificate_2](Export_TC_Certificate_2.jpg "Export TrueConnector Certificate 2")
+![Certificate_2](Export_TC_Certificate_2.jpg "Export TRUE Connector Certificate 2")
 
 Or you can use already extracted *execution_core_container.cer* file from **ecc_cert** folder.
 
 ### Updating external connector truststore
 
-Open truststore file *truststore.p12* using KeyStore Explorer and import TrueConnector certificate, so that the external connector can make https calls towards TrueConnector provider
+Open truststore file *truststore.p12* using KeyStore Explorer and import TRUE Connector certificate, so that the external connector can make https calls towards TRUE Connector provider
 
-![Truststore](Import_TC_Certificate.jpg "Import TrueConnector Certificate")
+![Truststore](Import_TC_Certificate.jpg "Import TRUE Connector Certificate")
 
 and provide alias *true-connector*
 
-![Truststore Alias](Import_TC_Certificate_alias.jpg "Import TrueConnector Certificate alias")
+![Truststore Alias](Import_TC_Certificate_alias.jpg "Import TRUE Connector Certificate alias")
 
 This will be used when external connector makes https request towards ecc-provider, to check hostname with imported certificate.
 
 
 ## Testbed interaction
 
-### TrueConnector as consumer
+### TRUE Connector as consumer
 
 To perform contract negotiation with DataSpaceConnector and get an artifact. For this purpose, you can use ![TC as consumer](TC_Consumer.png "TC as consumer")
 
@@ -311,9 +311,9 @@ If everything was successful, it should look like the following:
 ![TC as consumer result](TC_Consumer_result.png "TC as consumer result")
 
 
-### TrueConnector as provider
+### TRUE Connector as provider
 
-TrueConnector comes with predefined Self Description document. You can get more information about it by expecting the document itself on URL:
+TRUE Connector comes with predefined Self Description document. You can get more information about it by expecting the document itself on URL:
 
 ```
 https://localhost:8090/
