@@ -302,7 +302,7 @@ This will be used when external connector makes https request towards ecc-provid
 
 ### TRUE Connector as consumer
 
-To perform contract negotiation with another connector and get an artifact. For this purpose, you can use ![TC as consumer](TC_Consumer.png "TC as consumer")
+To perform contract negotiation with another connector and get an artifact. For this purpose, you can use ![TC as consumer](pictures/TC_Consumer.png "TC as consumer")
 
 You can execute the whole folder, same as before, or execute each request in that order.
 
