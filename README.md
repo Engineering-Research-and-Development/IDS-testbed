@@ -241,8 +241,6 @@ CONSUMER_DAPS_KEYSTORE_PASSWORD=password
 CONSUMER_DAPS_KEYSTORE_ALIAS=1
 ```
 
-(for the moment, we will use same DAPS certificate for both Provider and Consumer)
-
 **application.properties** for both consumer and provider
 
 ```
@@ -256,22 +254,6 @@ application.isEnabledUsageControl=true
 application.usageControlVersion=platoon
 
 ```
-
-### Enabling hostname validation
-
-In order to enable this functionality, following changes are required:
-
-**.env** file 
-
-```
-DISABLE_SSL_VALIDATION=false
-
-TRUSTORE_NAME=truststoreEcc.jks
-TRUSTORE_PASSWORD=allpassword
-
-```
-
-This will load certificates from truststore and when making https call towards target system, certificate will be validated against truststore, and if certificate is present and valid, call will be successful, otherwise you will get PKIX exception.
 
 ### Export TRUE Connector certificate
 
