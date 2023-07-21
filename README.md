@@ -1,5 +1,7 @@
 # IDSA Reference Testbed Installation (CA-DAPS-TC-MDB)
 
+![MVDS](pictures/MVDS.png "MVDS")
+
 ## Index
 - [Execution modes](https://github.com/Engineering-Research-and-Development/true-connector-mvds/blob/master/InstallationGuide.md#execution-modes)
     - [Hardware Requirements](https://github.com/Engineering-Research-and-Development/true-connector-mvds/blob/master/InstallationGuide.md#hardware-requirements)
