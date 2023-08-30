@@ -202,7 +202,7 @@ Place the local CA created certificate at the folder `DAPS/keys/TLS/` and name i
 
 The testbed will have two built-in Connectors which are already preconfigured and ready out-of-the-box. To tailor the TRUE Connector setup to your needs follow the next steps.
 
-For a deep dive in to the TRUE Connector see [here](https://github.com/Engineering-Research-and-Development/true-connector/tree/v1.0.0)
+For a deep dive in to the TRUE Connector see [here](https://github.com/Engineering-Research-and-Development/true-connector/tree/v1.0.1)
 
 ## Generate DAPS certificate using Omejdn DAPS
 
@@ -220,67 +220,94 @@ openssl pkcs12 -export -out testbed3.p12 -inkey testbed3.key -in testbed3.crt -c
 ```
 As Export password insert ***password***, and confirm it.
 
-
 This will generate valid testbed3.p12 file. Copy this file to certificate folder of the connector.
 
 
-## TRUE Connector properties
+## TRUE Connector configuration
 
-Make sure that following properties are configured for Testbed environment:
+You can either use the provided certificates out-of-the-box or create your own self-signed ones following the next steps:
 
-**.env** 
-
-```
-### PROVIDER Configuration
-PROVIDER_DAPS_KEYSTORE_NAME=testbed1.p12
-PROVIDER_DAPS_KEYSTORE_PASSWORD=password
-PROVIDER_DAPS_KEYSTORE_ALIAS=1
-
-PROVIDER_MULTIPART_EDGE=form
-
-CONSUMER_DAPS_KEYSTORE_NAME=testbed2.p12
-CONSUMER_DAPS_KEYSTORE_PASSWORD=password
-CONSUMER_DAPS_KEYSTORE_ALIAS=1
-```
-
-**application.properties** for both consumer and provider
+Generate private key and certificate with the following openssl command:
 
 ```
-application.isEnabledDapsInteraction=true
+openssl req -x509 -newkey rsa:2048 -keyout consumer-key.pem -out consumer-cert.pem -sha256 -days 365 -subj "/C=IT/ST=Italy/L=Lecce/O=Engineering Ingegneria Informatica SpA/OU=R&D/CN=TRUEConnector" -addext "subjectAltName=DNS:be-dataapp-consumer,DNS:ecc-consumer,DNS:uc-dataapp-consumer"
+ ```
 
-#Omejdn 
-application.dapsUrl=http://omejdn/auth/token
-application.dapsJWKSUrl=http://omejdn/auth/jwks.json
+* keyout - key name
+* out - certificate name
+* subj - information about the certificate owner like Company name, Country etc.
+* subjectAltName - host names and/or IP address of the consumer components and host machine
 
-application.isEnabledUsageControl=true
-application.usageControlVersion=platoon
+Afterwards you will be prompted to insert the password.
+ 
+To generate a KeyStore with the previous key and cert use the command:
 
 ```
+openssl pkcs12 -export -out consumer-keyStore.p12 -inkey consumer-key.pem -in consumer-cert.pem -name true-connector-consumer
+```
 
-### Export TRUE Connector certificate
+* out - KeyStore name
+* inkey - private key
+* in - certificate
 
-Open *ssl-server.jks* file from TRUEConnector/ecc_cert folder using KeyStore Explorer and export certificate (right click on entry name):
+Since the TRUEConnector uses the Java programming language it is advised to use the .jks format for the KeyStores and TrustStores. To convert the consumer KeyStore from .p12 to .jks use the following keytool command:
+ 
+``` 
+keytool -importkeystore -destkeystore true-connector-consumer-keystore.jks -srckeystore consumer-keyStore.p12 -srcstoretype PKCS12 -alias true-connector-consumer
+```
 
-![Certificate_1](pictures/Export_TC_Certificate_1.jpg "Export TRUE Connector Certificate")
+* destkeystore - name of the new .jks KeyStore
+* srckeystore - name of the .p12 KeyStore
 
-and provide location where to save exported certificate. It will be needed in next step, to update the external connector truststore.
 
-![Certificate_2](pictures/Export_TC_Certificate_2.jpg "Export TRUE Connector Certificate 2")
+Here are the commands for the same process for the provider:
 
-Or you can use already extracted *execution_core_container.cer* file from **ecc_cert** folder.
+```
+openssl req -x509 -newkey rsa:2048 -keyout provider-key.pem -out provider-cert.pem -sha256 -days 365 -subj "/C=IT/ST=Italy/L=Lecce/O=Engineering Ingegneria Informatica SpA/OU=R&D/CN=TRUEConnector" -addext "subjectAltName=DNS:be-dataapp-provider,DNS:ecc-provider,DNS:uc-dataapp-provider"
 
-### Updating external connector truststore
+openssl pkcs12 -export -out provider-keyStore.p12 -inkey provider-key.pem -in provider-cert.pem -name true-connector-provider
 
-Open truststore file *truststore.p12* using KeyStore Explorer and import TRUE Connector certificate, so that the external connector can make https calls towards TRUE Connector provider
+keytool -importkeystore -destkeystore true-connector-provider-keystore.jks -srckeystore provider-keyStore.p12 -srcstoretype PKCS12 -alias true-connector-provider
+```
 
-![Truststore](pictures/Import_TC_Certificate.jpg "Import TRUE Connector Certificate")
+At the end we need the TrustStores for the consumer and provider respectively in which we will both certificates:
 
-and provide alias *true-connector*
+```
+keytool -import -keystore true-connector-consumer-truststore.jks  -file provider-cert.pem -alias true-connector-provider
 
-![Truststore Alias](pictures/Import_TC_Certificate_alias.jpg "Import TRUE Connector Certificate alias")
+keytool -import -keystore true-connector-consumer-truststore.jks  -file consumer-cert.pem -alias true-connector-consumer
 
-This will be used when external connector makes https request towards ecc-provider, to check hostname with imported certificate.
+keytool -import -keystore true-connector-provider-truststore.jks  -file consumer-cert.pem -alias true-connector-consumer
 
+keytool -import -keystore true-connector-provider-truststore.jks  -file provider-cert.pem -alias true-connector-provider
+```
+
+These commands can be also used to add certificates from other services e.g. DAPS, Broker, other providers, to the TrustStores.
+
+
+After creating the KeyStores and TrustStores, you have insert their name, passwords, aliases and private key passwords in the .env:
+
+```
+#Consumer SSL settings
+CONSUMER_SERVER_SSL_ENABLED=true
+CONSUMER_KEYSTORE_NAME=true-connector-consumer-keystore.jks
+CONSUMER_KEY_PASSWORD=password
+CONSUMER_KEYSTORE_PASSWORD=password
+CONSUMER_ALIAS=true-connector-consumer
+#TRUSTORE (used also by IDSCP2)
+CONSUMER_TRUSTORE_NAME=true-connector-consumer-truststore.jks
+CONSUMER_TRUSTORE_PASSWORD=password
+
+#Provider SSL settings
+PROVIDER_SERVER_SSL_ENABLED=true
+PROVIDER_KEYSTORE_NAME=true-connector-provider-keystore.jks
+PROVIDER_KEY_PASSWORD=password
+PROVIDER_KEYSTORE_PASSWORD=password
+PROVIDER_ALIAS=true-connector-provider
+#TRUSTORE (used also by IDSCP2)
+PROVIDER_TRUSTORE_NAME=true-connector-provider-truststore.jks
+PROVIDER_TRUSTORE_PASSWORD=password
+```
 
 ## Testbed interaction
 
