@@ -1,37 +1,35 @@
-# IDSA Reference Testbed Installation (CA-DAPS-TC-MDB)
+# TRUEConnector-MVDS (CA-DAPS-TC-MDB)
 
 ![MVDS](pictures/MVDS.png "MVDS")
 
 ## Index
-- [Execution modes](https://github.com/Engineering-Research-and-Development/true-connector-mvds/blob/master/InstallationGuide.md#execution-modes)
-    - [Hardware Requirements](https://github.com/Engineering-Research-and-Development/true-connector-mvds/blob/master/InstallationGuide.md#hardware-requirements)
-- [Target View: Preconfigured testbed](https://github.com/Engineering-Research-and-Development/true-connector-mvds/blob/master/InstallationGuide.md#target-view-preconfigured-testbed)
-- [Target View: Manual testbed set up](https://github.com/Engineering-Research-and-Development/true-connector-mvds/blob/master/InstallationGuide.md#target-view-manual-testbed-set-up)
-    - [Certificate Authority](https://github.com/Engineering-Research-and-Development/true-connector-mvds/blob/master/InstallationGuide.md#certificate-authority)
-    - [DAPS](https://github.com/Engineering-Research-and-Development/true-connector-mvds/blob/master/InstallationGuide.md#daps)
-    - [TRUE Connector](https://github.com/Engineering-Research-and-Development/true-connector-mvds/blob/master/InstallationGuide.md#true-connector)
-    - [Metadata Broker](https://github.com/Engineering-Research-and-Development/true-connector-mvds/blob/master/InstallationGuide.md#metadata-broker)
-- [Stop and delete testbed set up](https://github.com/Engineering-Research-and-Development/true-connector-mvds/blob/master/InstallationGuide.md#stop-and-delete-testbed-set-up)
+- [Execution modes](https://github.com/Engineering-Research-and-Development/true-connector-mvds/blob/master/README.md#execution-modes)
+- [Hardware Requirements](https://github.com/Engineering-Research-and-Development/true-connector-mvds/blob/master/README.md#hardware-requirements)
+- [Certificate Authority](https://github.com/Engineering-Research-and-Development/true-connector-mvds/blob/master/README.md#certificate-authority)
+- [DAPS](https://github.com/Engineering-Research-and-Development/true-connector-mvds/blob/master/README.md#daps)
+- [TRUE Connector](https://github.com/Engineering-Research-and-Development/true-connector-mvds/blob/master/README.md#true-connector)
+- [Metadata Broker](https://github.com/Engineering-Research-and-Development/true-connector-mvds/blob/master/README.md#metadata-broker)
+- [Stop and delete TRUEConnector-MVDS set up](https://github.com/Engineering-Research-and-Development/true-connector-mvds/blob/master/README.md#stopping-the-TRUEConnector-MVDS)
 
 The installation and configuration process is explained below for each of the components. To further support this document, the links to the official installation guides will be linked.
 
 # Execution modes
-You may either run the preconfigured testbed offered in this repo or follow the instructions for the manual setup below to set it up on your own and possibly adjust it to your needs.
+You may either run the preconfigured TRUEConnector-MVDS offered in this repository or follow the instructions for the manual setup below to set it up on your own and possibly adjust it to your needs.
 
-## Hardware Requirements
+# Hardware Requirements
 
-In this section the minimum requirements required for operating the IDS-testbed are detailed.
+In this section the minimum requirements required for operating the TRUEConnector-MVDS are detailed.
 
-The current minimum requirements for the IDS-Testbed are:
+The current minimum requirements for the TRUEConnector-MVDS are:
 - 4 GB RAM (however 8GB RAM is recommended)
 - 50 GB storage
 
 It is recommended to use 64bit quad core processor to provide enough processing power for all docker containers.
 
-Take into account that if more components are included at the IDS-testbed or a huge amount of data is uploaded it is possible to run out of disk free space. In this cases it is recommended to provide more free disk storage.
+Take into account that if more components are included at the TRUEConnector-MVDS or a huge amount of data is uploaded it is possible to run out of disk free space. In this cases it is recommended to provide more free disk storage.
 
-# Preconfigured testbed
-The Testbed is already preconfigured out-of-the-box for testing purposes and you can start it by executing in the root folder where the docker-compose.yml is located:
+# Preconfigured MVDS
+The TRUEConnector-MVDS is already preconfigured out-of-the-box for testing purposes and you can start it by executing in the root folder where the docker-compose.yml is located:
 
 ```
 docker-compose up -d
@@ -43,7 +41,7 @@ To see the log lines:
 docker-compose logs -f
 ```
 
-Follow this set up of the Testbed to configure it to your needs.
+Follow this set up of the TRUEConnector-MVDS to configure it to your needs.
 
 # CERTIFICATE AUTHORITY
 Move to right directory, and make the files executable in CertificateAuthority.
@@ -103,7 +101,7 @@ The directory can be found in
 DAPS/keys
 ```
 
-Add the certificate provided by the local CA, newly created by the local CA or provided by Fraunhofer AISEC. Place the certificate at the folder `DAPS/keys/omejdn/` with name `omejdn.key` to avoid dependency issues later on.
+Add the certificate provided by the local CA, newly created by the local CA or provided by a third party CA. Place the certificate at the folder `DAPS/keys/omejdn/` with name `omejdn.key` to avoid dependency issues later on.
 
 ## Adding the clients to the DAPS
 
@@ -131,7 +129,7 @@ Change the configuration file `.env` with your favorite editor, e.g. `nano`.
 nano .env
 ```
 
-**Note** The file could be hidden. Select the option `show hidden files` and it should be placed at IDS-testbed root directory.
+**Note** The file could be hidden. Select the option `show hidden files` and it should be placed at TRUEConnector-MVDS root directory.
 
 Replace the following lines with the necessary configuration. It could look something like this
 
@@ -200,15 +198,15 @@ Place the local CA created certificate at the folder `DAPS/keys/TLS/` and name i
 
 # TRUE CONNECTOR
 
-The testbed will have two built-in Connectors which are already preconfigured and ready out-of-the-box. To tailor the TRUE Connector setup to your needs follow the next steps.
+The TRUEConnector-MVDS will have two built-in Connectors which are already preconfigured and ready out-of-the-box. To tailor the TRUE Connector setup to your needs follow the next steps.
 
 For a deep dive in to the TRUE Connector see [here](https://github.com/Engineering-Research-and-Development/true-connector/tree/v1.0.1)
 
 ## Generate DAPS certificate using Omejdn DAPS
 
-This step is not mandatory, since Testbed comes with some generated certificates which can be used temporarily.
+This step is not mandatory, since the TRUEConnector-MVDS comes with some generated certificates which can be used temporarily.
 
-If you want to create new certificate, please follow [instructions](https://github.com/Engineering-Research-and-Development/true-connector-mvds/tree/master/CertificateAuthority) provided by Testbed, on how to achieve this.
+If you want to create new certificate, please follow [instructions](https://github.com/Engineering-Research-and-Development/true-connector-mvds/tree/master/CertificateAuthority) provided by the Testbed, on how to achieve this.
 
 
 ## DAPS certificate
@@ -388,7 +386,7 @@ Use nano or your most favourite editor.
 ```
 nano broker-core/src/main/resources/application.properties
 ```
-### DAPS
+# DAPS
 This will make use of the locally installed DAPS.
 
 ```
@@ -540,9 +538,9 @@ Go to the compose file and build the Metadata Broker
 docker-compose up
 ```
 
-## Stopping the testbed
+# Stopping the TRUEConnector-MVDS
 
-To stop the testbed just use the following command:
+To stop the TRUEConnector-MVDS just use the following command:
 
 ```
 docker-compose down
