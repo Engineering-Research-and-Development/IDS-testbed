@@ -309,6 +309,16 @@ PROVIDER_TRUSTORE_NAME=true-connector-provider-truststore.jks
 PROVIDER_TRUSTORE_PASSWORD=password
 ```
 
+**NOTE** The KeyStores for websocket communication must be set manually in the config.properties found in TRUEConnector/be-dataapp_resources_consumer and TRUEConnector/be-dataapp_resources_provider respectively:
+
+```
+server.ssl.key-password=keystorePassword
+server.ssl.key-store=/cert/true-connector-consumer-keystore.jks
+
+server.ssl.key-password=keystorePassword
+server.ssl.key-store=/cert/true-connector-provider-keystore.jks
+```
+
 ## Testbed interaction
 
 For interaction with the Testbed you can use the provided [Postman collection](TRUEConnector_MVDS.postman_collection.json)
