@@ -44,6 +44,8 @@ docker-compose logs -f
 Follow this set up of the TRUEConnector-MVDS to configure it to your needs.
 
 # CERTIFICATE AUTHORITY
+These certificates are for the omejdn DAPS, for TLS certificates please see [TRUE Connector configuration](#true-connector-configuration).
+
 Move to right directory, and make the files executable in CertificateAuthority.
 
 The official documentation will cover the scope, dependencies and usage of the component.
@@ -204,9 +206,9 @@ For a deep dive in to the TRUE Connector see [here](https://github.com/Engineeri
 
 ## Generate DAPS certificate using Omejdn DAPS
 
-This step is not mandatory, since the TRUEConnector-MVDS comes with some generated certificates which can be used temporarily.
+This step is not mandatory, since the TRUEConnector-MVDS comes with some generated certificates which can be used temporarily. These are for the omejdn DAPS, for TLS certificates please see [TRUE Connector configuration](#true-connector-configuration).
 
-If you want to create new certificate, please follow [instructions](https://github.com/Engineering-Research-and-Development/true-connector-mvds/tree/master/CertificateAuthority) provided by the Testbed, on how to achieve this.
+If you want to create new certificate, please follow [instructions](https://github.com/Engineering-Research-and-Development/true-connector-mvds/tree/master/CertificateAuthority/README.md) on how to achieve this.
 
 
 ## DAPS certificate
@@ -287,7 +289,6 @@ After creating the KeyStores and TrustStores, you have insert their name, passwo
 
 ```
 #Consumer SSL settings
-CONSUMER_SERVER_SSL_ENABLED=true
 CONSUMER_KEYSTORE_NAME=true-connector-consumer-keystore.jks
 CONSUMER_KEY_PASSWORD=password
 CONSUMER_KEYSTORE_PASSWORD=password
@@ -297,7 +298,6 @@ CONSUMER_TRUSTORE_NAME=true-connector-consumer-truststore.jks
 CONSUMER_TRUSTORE_PASSWORD=password
 
 #Provider SSL settings
-PROVIDER_SERVER_SSL_ENABLED=true
 PROVIDER_KEYSTORE_NAME=true-connector-provider-keystore.jks
 PROVIDER_KEY_PASSWORD=password
 PROVIDER_KEYSTORE_PASSWORD=password
