@@ -1,35 +1,35 @@
-# IDSA Reference Testbed Installation (CA-DAPS-TC-MDB)
+# TRUEConnector-MVDS (CA-DAPS-TC-MDB)
+
+![MVDS](pictures/MVDS.png "MVDS")
 
 ## Index
-- [Execution modes](https://github.com/Engineering-Research-and-Development/true-connector-mvds/blob/master/InstallationGuide.md#execution-modes)
-    - [Hardware Requirements](https://github.com/Engineering-Research-and-Development/true-connector-mvds/blob/master/InstallationGuide.md#hardware-requirements)
-- [Target View: Preconfigured testbed](https://github.com/Engineering-Research-and-Development/true-connector-mvds/blob/master/InstallationGuide.md#target-view-preconfigured-testbed)
-- [Target View: Manual testbed set up](https://github.com/Engineering-Research-and-Development/true-connector-mvds/blob/master/InstallationGuide.md#target-view-manual-testbed-set-up)
-    - [Certificate Authority](https://github.com/Engineering-Research-and-Development/true-connector-mvds/blob/master/InstallationGuide.md#certificate-authority)
-    - [DAPS](https://github.com/Engineering-Research-and-Development/true-connector-mvds/blob/master/InstallationGuide.md#daps)
-    - [TRUE Connector](https://github.com/Engineering-Research-and-Development/true-connector-mvds/blob/master/InstallationGuide.md#true-connector)
-    - [Metadata Broker](https://github.com/Engineering-Research-and-Development/true-connector-mvds/blob/master/InstallationGuide.md#metadata-broker)
-- [Stop and delete testbed set up](https://github.com/Engineering-Research-and-Development/true-connector-mvds/blob/master/InstallationGuide.md#stop-and-delete-testbed-set-up)
+- [Execution modes](https://github.com/Engineering-Research-and-Development/true-connector-mvds/blob/master/README.md#execution-modes)
+- [Hardware Requirements](https://github.com/Engineering-Research-and-Development/true-connector-mvds/blob/master/README.md#hardware-requirements)
+- [Certificate Authority](https://github.com/Engineering-Research-and-Development/true-connector-mvds/blob/master/README.md#certificate-authority)
+- [DAPS](https://github.com/Engineering-Research-and-Development/true-connector-mvds/blob/master/README.md#daps)
+- [TRUE Connector](https://github.com/Engineering-Research-and-Development/true-connector-mvds/blob/master/README.md#true-connector)
+- [Metadata Broker](https://github.com/Engineering-Research-and-Development/true-connector-mvds/blob/master/README.md#metadata-broker)
+- [Stop and delete TRUEConnector-MVDS set up](https://github.com/Engineering-Research-and-Development/true-connector-mvds/blob/master/README.md#stopping-the-TRUEConnector-MVDS)
 
 The installation and configuration process is explained below for each of the components. To further support this document, the links to the official installation guides will be linked.
 
 # Execution modes
-You may either run the preconfigured testbed offered in this repo or follow the instructions for the manual setup below to set it up on your own and possibly adjust it to your needs.
+You may either run the preconfigured TRUEConnector-MVDS offered in this repository or follow the instructions for the manual setup below to set it up on your own and possibly adjust it to your needs.
 
-## Hardware Requirements
+# Hardware Requirements
 
-In this section the minimum requirements required for operating the IDS-testbed are detailed.
+In this section the minimum requirements required for operating the TRUEConnector-MVDS are detailed.
 
-The current minimum requirements for the IDS-Testbed are:
+The current minimum requirements for the TRUEConnector-MVDS are:
 - 4 GB RAM (however 8GB RAM is recommended)
 - 50 GB storage
 
 It is recommended to use 64bit quad core processor to provide enough processing power for all docker containers.
 
-Take into account that if more components are included at the IDS-testbed or a huge amount of data is uploaded it is possible to run out of disk free space. In this cases it is recommended to provide more free disk storage.
+Take into account that if more components are included at the TRUEConnector-MVDS or a huge amount of data is uploaded it is possible to run out of disk free space. In this cases it is recommended to provide more free disk storage.
 
-# Preconfigured testbed
-The Testbed is already preconfigured out-of-the-box for testing purposes and you can start it by executing in the root folder where the docker-compose.yml is located:
+# Preconfigured MVDS
+The TRUEConnector-MVDS is already preconfigured out-of-the-box for testing purposes and you can start it by executing in the root folder where the docker-compose.yml is located:
 
 ```
 docker-compose up -d
@@ -41,9 +41,11 @@ To see the log lines:
 docker-compose logs -f
 ```
 
-Follow this set up of the Testbed to configure it to your needs.
+Follow this set up of the TRUEConnector-MVDS to configure it to your needs.
 
 # CERTIFICATE AUTHORITY
+These certificates are for the omejdn DAPS, for TLS certificates please see [TRUE Connector configuration](#true-connector-configuration).
+
 Move to right directory, and make the files executable in CertificateAuthority.
 
 The official documentation will cover the scope, dependencies and usage of the component.
@@ -101,7 +103,7 @@ The directory can be found in
 DAPS/keys
 ```
 
-Add the certificate provided by the local CA, newly created by the local CA or provided by Fraunhofer AISEC. Place the certificate at the folder `DAPS/keys/omejdn/` with name `omejdn.key` to avoid dependency issues later on.
+Add the certificate provided by the local CA, newly created by the local CA or provided by a third party CA. Place the certificate at the folder `DAPS/keys/omejdn/` with name `omejdn.key` to avoid dependency issues later on.
 
 ## Adding the clients to the DAPS
 
@@ -129,7 +131,7 @@ Change the configuration file `.env` with your favorite editor, e.g. `nano`.
 nano .env
 ```
 
-**Note** The file could be hidden. Select the option `show hidden files` and it should be placed at IDS-testbed root directory.
+**Note** The file could be hidden. Select the option `show hidden files` and it should be placed at TRUEConnector-MVDS root directory.
 
 Replace the following lines with the necessary configuration. It could look something like this
 
@@ -198,15 +200,15 @@ Place the local CA created certificate at the folder `DAPS/keys/TLS/` and name i
 
 # TRUE CONNECTOR
 
-The testbed will have two built-in Connectors which are already preconfigured and ready out-of-the-box. To tailor the TRUE Connector setup to your needs follow the next steps.
+The TRUEConnector-MVDS will have two built-in Connectors which are already preconfigured and ready out-of-the-box. To tailor the TRUE Connector setup to your needs follow the next steps.
 
-For a deep dive in to the TRUE Connector see [here](https://github.com/Engineering-Research-and-Development/true-connector/tree/v1.0.0)
+For a deep dive in to the TRUE Connector see [here](https://github.com/Engineering-Research-and-Development/true-connector/tree/v1.0.1)
 
 ## Generate DAPS certificate using Omejdn DAPS
 
-This step is not mandatory, since Testbed comes with some generated certificates which can be used temporarily.
+This step is not mandatory, since the TRUEConnector-MVDS comes with some generated certificates which can be used temporarily. These are for the omejdn DAPS, for TLS certificates please see [TRUE Connector configuration](#true-connector-configuration).
 
-If you want to create new certificate, please follow [instructions](https://github.com/Engineering-Research-and-Development/true-connector-mvds/tree/master/CertificateAuthority) provided by Testbed, on how to achieve this.
+If you want to create new certificate, please follow [instructions](https://github.com/Engineering-Research-and-Development/true-connector-mvds/tree/master/CertificateAuthority/README.md) on how to achieve this.
 
 
 ## DAPS certificate
@@ -218,67 +220,102 @@ openssl pkcs12 -export -out testbed3.p12 -inkey testbed3.key -in testbed3.crt -c
 ```
 As Export password insert ***password***, and confirm it.
 
-
 This will generate valid testbed3.p12 file. Copy this file to certificate folder of the connector.
 
 
-## TRUE Connector properties
+## TRUE Connector configuration
 
-Make sure that following properties are configured for Testbed environment:
+You can either use the provided certificates out-of-the-box or create your own self-signed ones following the next steps:
 
-**.env** 
-
-```
-### PROVIDER Configuration
-PROVIDER_DAPS_KEYSTORE_NAME=testbed1.p12
-PROVIDER_DAPS_KEYSTORE_PASSWORD=password
-PROVIDER_DAPS_KEYSTORE_ALIAS=1
-
-PROVIDER_MULTIPART_EDGE=form
-
-CONSUMER_DAPS_KEYSTORE_NAME=testbed2.p12
-CONSUMER_DAPS_KEYSTORE_PASSWORD=password
-CONSUMER_DAPS_KEYSTORE_ALIAS=1
-```
-
-**application.properties** for both consumer and provider
+Generate private key and certificate with the following openssl command:
 
 ```
-application.isEnabledDapsInteraction=true
+openssl req -x509 -newkey rsa:2048 -keyout consumer-key.pem -out consumer-cert.pem -sha256 -days 365 -subj "/C=IT/ST=Italy/L=Lecce/O=Engineering Ingegneria Informatica SpA/OU=R&D/CN=TRUEConnector" -addext "subjectAltName=DNS:be-dataapp-consumer,DNS:ecc-consumer,DNS:uc-dataapp-consumer"
+ ```
 
-#Omejdn 
-application.dapsUrl=http://omejdn/auth/token
-application.dapsJWKSUrl=http://omejdn/auth/jwks.json
+* keyout - key name
+* out - certificate name
+* subj - information about the certificate owner like Company name, Country etc.
+* subjectAltName - host names and/or IP address of the consumer components and host machine
 
-application.isEnabledUsageControl=true
-application.usageControlVersion=platoon
+Afterwards you will be prompted to insert the password.
+ 
+To generate a KeyStore with the previous key and cert use the command:
 
 ```
+openssl pkcs12 -export -out consumer-keyStore.p12 -inkey consumer-key.pem -in consumer-cert.pem -name true-connector-consumer
+```
 
-### Export TRUE Connector certificate
+* out - KeyStore name
+* inkey - private key
+* in - certificate
 
-Open *ssl-server.jks* file from TRUEConnector/ecc_cert folder using KeyStore Explorer and export certificate (right click on entry name):
+Since the TRUEConnector uses the Java programming language it is advised to use the .jks format for the KeyStores and TrustStores. To convert the consumer KeyStore from .p12 to .jks use the following keytool command:
+ 
+``` 
+keytool -importkeystore -destkeystore true-connector-consumer-keystore.jks -srckeystore consumer-keyStore.p12 -srcstoretype PKCS12 -alias true-connector-consumer
+```
 
-![Certificate_1](pictures/Export_TC_Certificate_1.jpg "Export TRUE Connector Certificate")
+* destkeystore - name of the new .jks KeyStore
+* srckeystore - name of the .p12 KeyStore
 
-and provide location where to save exported certificate. It will be needed in next step, to update the external connector truststore.
 
-![Certificate_2](pictures/Export_TC_Certificate_2.jpg "Export TRUE Connector Certificate 2")
+Here are the commands for the same process for the provider:
 
-Or you can use already extracted *execution_core_container.cer* file from **ecc_cert** folder.
+```
+openssl req -x509 -newkey rsa:2048 -keyout provider-key.pem -out provider-cert.pem -sha256 -days 365 -subj "/C=IT/ST=Italy/L=Lecce/O=Engineering Ingegneria Informatica SpA/OU=R&D/CN=TRUEConnector" -addext "subjectAltName=DNS:be-dataapp-provider,DNS:ecc-provider,DNS:uc-dataapp-provider"
 
-### Updating external connector truststore
+openssl pkcs12 -export -out provider-keyStore.p12 -inkey provider-key.pem -in provider-cert.pem -name true-connector-provider
 
-Open truststore file *truststore.p12* using KeyStore Explorer and import TRUE Connector certificate, so that the external connector can make https calls towards TRUE Connector provider
+keytool -importkeystore -destkeystore true-connector-provider-keystore.jks -srckeystore provider-keyStore.p12 -srcstoretype PKCS12 -alias true-connector-provider
+```
 
-![Truststore](pictures/Import_TC_Certificate.jpg "Import TRUE Connector Certificate")
+At the end we need the TrustStores for the consumer and provider respectively in which we will both certificates:
 
-and provide alias *true-connector*
+```
+keytool -import -keystore true-connector-consumer-truststore.jks  -file provider-cert.pem -alias true-connector-provider
 
-![Truststore Alias](pictures/Import_TC_Certificate_alias.jpg "Import TRUE Connector Certificate alias")
+keytool -import -keystore true-connector-consumer-truststore.jks  -file consumer-cert.pem -alias true-connector-consumer
 
-This will be used when external connector makes https request towards ecc-provider, to check hostname with imported certificate.
+keytool -import -keystore true-connector-provider-truststore.jks  -file consumer-cert.pem -alias true-connector-consumer
 
+keytool -import -keystore true-connector-provider-truststore.jks  -file provider-cert.pem -alias true-connector-provider
+```
+
+These commands can be also used to add certificates from other services e.g. DAPS, Broker, other providers, to the TrustStores.
+
+
+After creating the KeyStores and TrustStores, you have insert their name, passwords, aliases and private key passwords in the .env:
+
+```
+#Consumer SSL settings
+CONSUMER_KEYSTORE_NAME=true-connector-consumer-keystore.jks
+CONSUMER_KEY_PASSWORD=password
+CONSUMER_KEYSTORE_PASSWORD=password
+CONSUMER_ALIAS=true-connector-consumer
+#TRUSTORE (used also by IDSCP2)
+CONSUMER_TRUSTORE_NAME=true-connector-consumer-truststore.jks
+CONSUMER_TRUSTORE_PASSWORD=password
+
+#Provider SSL settings
+PROVIDER_KEYSTORE_NAME=true-connector-provider-keystore.jks
+PROVIDER_KEY_PASSWORD=password
+PROVIDER_KEYSTORE_PASSWORD=password
+PROVIDER_ALIAS=true-connector-provider
+#TRUSTORE (used also by IDSCP2)
+PROVIDER_TRUSTORE_NAME=true-connector-provider-truststore.jks
+PROVIDER_TRUSTORE_PASSWORD=password
+```
+
+**NOTE** The KeyStores for websocket communication must be set manually in the config.properties found in TRUEConnector/be-dataapp_resources_consumer and TRUEConnector/be-dataapp_resources_provider respectively:
+
+```
+server.ssl.key-password=keystorePassword
+server.ssl.key-store=/cert/true-connector-consumer-keystore.jks
+
+server.ssl.key-password=keystorePassword
+server.ssl.key-store=/cert/true-connector-provider-keystore.jks
+```
 
 ## Testbed interaction
 
@@ -349,7 +386,7 @@ Use nano or your most favourite editor.
 ```
 nano broker-core/src/main/resources/application.properties
 ```
-### DAPS
+# DAPS
 This will make use of the locally installed DAPS.
 
 ```
@@ -501,9 +538,9 @@ Go to the compose file and build the Metadata Broker
 docker-compose up
 ```
 
-## Stopping the testbed
+# Stopping the TRUEConnector-MVDS
 
-To stop the testbed just use the following command:
+To stop the TRUEConnector-MVDS just use the following command:
 
 ```
 docker-compose down

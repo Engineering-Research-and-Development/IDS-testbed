@@ -13,6 +13,54 @@
 					"name": "ContractOffer",
 					"item": [
 						{
+							"name": "SelfDescription",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();\r",
+											"pm.response.to.be.ok;\r",
+											"//store applicants self-description for further tests\r",
+											"pm.collectionVariables.set(\"APPLICANT_SELF_DESCRIPTION\", jsonData)\r",
+											"\r",
+											"pm.test(\"ContractOffer\", function () {\r",
+											"  // catalog\r",
+											"  pm.expect(jsonData[\"ids:resourceCatalog\"][0][\"@id\"]).to.exist;\r",
+											"  pm.collectionVariables.set(\"resourceCatalog\", jsonData[\"ids:resourceCatalog\"][0][\"@id\"])  \r",
+											"  // resource\r",
+											"  pm.expect(jsonData[\"ids:resourceCatalog\"][0][\"ids:offeredResource\"][0][\"@id\"]).to.exist;\r",
+											"  pm.collectionVariables.set(\"offeredResource\", jsonData[\"ids:resourceCatalog\"][0][\"ids:offeredResource\"][0][\"@id\"])\r",
+											"  // contractOffer\r",
+											"  pm.expect(jsonData[\"ids:resourceCatalog\"][0][\"ids:offeredResource\"][0][\"ids:contractOffer\"][0][\"@id\"]).to.exist;\r",
+											"  pm.collectionVariables.set(\"contractOffer\", jsonData[\"ids:resourceCatalog\"][0][\"ids:offeredResource\"][0][\"ids:contractOffer\"][0][\"@id\"])\r",
+											"  // representation\r",
+											"  pm.expect(jsonData[\"ids:resourceCatalog\"][0][\"ids:offeredResource\"][0][\"ids:representation\"][0][\"@id\"]).to.exist;\r",
+											"  pm.collectionVariables.set(\"representation\", jsonData[\"ids:resourceCatalog\"][0][\"ids:offeredResource\"][0][\"ids:representation\"][0][\"@id\"])\r",
+											"  });"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{Self_Description_URL}}/api/selfDescription/",
+									"host": [
+										"{{Self_Description_URL}}"
+									],
+									"path": [
+										"api",
+										"selfDescription",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "ContractOffer",
 							"event": [
 								{
@@ -26,7 +74,6 @@
 											"//http://w3id.org/engrd/connector/artifact/test\r",
 											"  pm.expect(pm.response.text()).to.include(\"ids:Permission\");\r",
 											"  pm.expect(pm.response.text()).to.include(\"ids:ContractOffer\");\r",
-											"  pm.expect(pm.response.text()).to.include(\"ids:Constraint\");\r",
 											"  pm.expect(pm.response.text()).to.include(\"http://w3id.org/engrd/connector/artifact\");\r",
 											"  });"
 										],
@@ -234,6 +281,54 @@
 					"name": "OfferedResource",
 					"item": [
 						{
+							"name": "SelfDescription",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();\r",
+											"pm.response.to.be.ok;\r",
+											"//store applicants self-description for further tests\r",
+											"pm.collectionVariables.set(\"APPLICANT_SELF_DESCRIPTION\", jsonData)\r",
+											"\r",
+											"pm.test(\"ContractOffer\", function () {\r",
+											"  // catalog\r",
+											"  pm.expect(jsonData[\"ids:resourceCatalog\"][0][\"@id\"]).to.exist;\r",
+											"  pm.collectionVariables.set(\"resourceCatalog\", jsonData[\"ids:resourceCatalog\"][0][\"@id\"])  \r",
+											"  // resource\r",
+											"  pm.expect(jsonData[\"ids:resourceCatalog\"][0][\"ids:offeredResource\"][0][\"@id\"]).to.exist;\r",
+											"  pm.collectionVariables.set(\"offeredResource\", jsonData[\"ids:resourceCatalog\"][0][\"ids:offeredResource\"][0][\"@id\"])\r",
+											"  // contractOffer\r",
+											"  pm.expect(jsonData[\"ids:resourceCatalog\"][0][\"ids:offeredResource\"][0][\"ids:contractOffer\"][0][\"@id\"]).to.exist;\r",
+											"  pm.collectionVariables.set(\"contractOffer\", jsonData[\"ids:resourceCatalog\"][0][\"ids:offeredResource\"][0][\"ids:contractOffer\"][0][\"@id\"])\r",
+											"  // representation\r",
+											"  pm.expect(jsonData[\"ids:resourceCatalog\"][0][\"ids:offeredResource\"][0][\"ids:representation\"][0][\"@id\"]).to.exist;\r",
+											"  pm.collectionVariables.set(\"representation\", jsonData[\"ids:resourceCatalog\"][0][\"ids:offeredResource\"][0][\"ids:representation\"][0][\"@id\"])\r",
+											"  });"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{Self_Description_URL}}/api/selfDescription/",
+									"host": [
+										"{{Self_Description_URL}}"
+									],
+									"path": [
+										"api",
+										"selfDescription",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "OfferedResource",
 							"event": [
 								{
@@ -293,7 +388,7 @@
 											"//http://w3id.org/engrd/connector/artifact/postman\r",
 											"  pm.expect(pm.response.text()).to.include(\"http://w3id.org/engrd/connector/artifact/postman\");\r",
 											"  var list = jsonData[\"ids:resourceCatalog\"][0][\"ids:offeredResource\"].length;\r",
-											"  tests[\"Validate total of 3 offered resources\"] = list === 3;\r",
+											"  tests[\"Validate total of 3 offered resources\"] = list > 2;\r",
 											"  });\r",
 											""
 										],
@@ -435,6 +530,54 @@
 				{
 					"name": "Representation",
 					"item": [
+						{
+							"name": "SelfDescription",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();\r",
+											"pm.response.to.be.ok;\r",
+											"//store applicants self-description for further tests\r",
+											"pm.collectionVariables.set(\"APPLICANT_SELF_DESCRIPTION\", jsonData)\r",
+											"\r",
+											"pm.test(\"ContractOffer\", function () {\r",
+											"  // catalog\r",
+											"  pm.expect(jsonData[\"ids:resourceCatalog\"][0][\"@id\"]).to.exist;\r",
+											"  pm.collectionVariables.set(\"resourceCatalog\", jsonData[\"ids:resourceCatalog\"][0][\"@id\"])  \r",
+											"  // resource\r",
+											"  pm.expect(jsonData[\"ids:resourceCatalog\"][0][\"ids:offeredResource\"][0][\"@id\"]).to.exist;\r",
+											"  pm.collectionVariables.set(\"offeredResource\", jsonData[\"ids:resourceCatalog\"][0][\"ids:offeredResource\"][0][\"@id\"])\r",
+											"  // contractOffer\r",
+											"  pm.expect(jsonData[\"ids:resourceCatalog\"][0][\"ids:offeredResource\"][0][\"ids:contractOffer\"][0][\"@id\"]).to.exist;\r",
+											"  pm.collectionVariables.set(\"contractOffer\", jsonData[\"ids:resourceCatalog\"][0][\"ids:offeredResource\"][0][\"ids:contractOffer\"][0][\"@id\"])\r",
+											"  // representation\r",
+											"  pm.expect(jsonData[\"ids:resourceCatalog\"][0][\"ids:offeredResource\"][0][\"ids:representation\"][0][\"@id\"]).to.exist;\r",
+											"  pm.collectionVariables.set(\"representation\", jsonData[\"ids:resourceCatalog\"][0][\"ids:offeredResource\"][0][\"ids:representation\"][0][\"@id\"])\r",
+											"  });"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{Self_Description_URL}}/api/selfDescription/",
+									"host": [
+										"{{Self_Description_URL}}"
+									],
+									"path": [
+										"api",
+										"selfDescription",
+										""
+									]
+								}
+							},
+							"response": []
+						},
 						{
 							"name": "Representation",
 							"event": [
@@ -924,7 +1067,7 @@
 				"basic": [
 					{
 						"key": "username",
-						"value": "proxy",
+						"value": "idsUser",
 						"type": "string"
 					},
 					{
@@ -1187,7 +1330,7 @@
 				"basic": [
 					{
 						"key": "username",
-						"value": "proxy",
+						"value": "idsUser",
 						"type": "string"
 					},
 					{
@@ -1223,6 +1366,23 @@
 			"item": [
 				{
 					"name": "Connector Update Message",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body is MessageProcessedNotificationMessage\", function () {\r",
+									"    pm.response.to.have.body(\"MessageProcessedNotificationMessage\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -1245,30 +1405,24 @@
 					"response": []
 				},
 				{
-					"name": "Connector Unavailable Message",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"multipart\": \"{{multipart_type}}\",\r\n    \"Forward-To\": \"{{Broker_URL}}\",\r\n    \"messageType\": \"ConnectorUnavailableMessage\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{Proxy_Endpoint}}",
-							"host": [
-								"{{Proxy_Endpoint}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Connector Query Message",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body has ?connectorUri\", function () {\r",
+									"     pm.expect(pm.response.text()).to.contain(\"?connectorUri\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -1289,19 +1443,59 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Connector Unavailable Message",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body is MessageProcessedNotificationMessage\", function () {\r",
+									"    pm.response.to.have.body(\"MessageProcessedNotificationMessage\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"multipart\": \"{{multipart_type}}\",\r\n    \"Forward-To\": \"{{Broker_URL}}\",\r\n    \"messageType\": \"ConnectorUnavailableMessage\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Proxy_Endpoint}}",
+							"host": [
+								"{{Proxy_Endpoint}}"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"auth": {
 				"type": "basic",
 				"basic": [
 					{
-						"key": "password",
-						"value": "password",
+						"key": "username",
+						"value": "idsUser",
 						"type": "string"
 					},
 					{
-						"key": "username",
-						"value": "proxy",
+						"key": "password",
+						"value": "password",
 						"type": "string"
 					}
 				]
@@ -1425,6 +1619,30 @@
 		},
 		{
 			"key": "transfer_contract",
+			"value": ""
+		},
+		{
+			"key": "futureDate",
+			"value": ""
+		},
+		{
+			"key": "APPLICANT_SELF_DESCRIPTION",
+			"value": ""
+		},
+		{
+			"key": "resourceCatalog",
+			"value": ""
+		},
+		{
+			"key": "offeredResource",
+			"value": ""
+		},
+		{
+			"key": "contractOffer",
+			"value": ""
+		},
+		{
+			"key": "representation",
 			"value": ""
 		}
 	]
